@@ -2,6 +2,7 @@ package controller;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.google.inject.Inject;
 import models.Book;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,6 +19,7 @@ public class FileBookFactory implements BooksFactory {
     }.getType();
     @NotNull
     private final String fileName;
+    @Inject
     public FileBookFactory(@NotNull String fileName) {
         this.fileName = fileName;
     }

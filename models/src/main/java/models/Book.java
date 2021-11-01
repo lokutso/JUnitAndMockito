@@ -1,27 +1,43 @@
 package models;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Optional;
+
 public class Book {
+    @NotNull
     private Author author;
+    @NotNull
     private String name;
 
-    public Book(Author author, String name) {
+    public Book(@NotNull Author author, @NotNull String name) {
         this.author = author;
         this.name = name;
     }
 
-    public Author getAuthor() {
-        return this.author;
+    @NotNull
+    public Optional<Author> getAuthor() {
+        return Optional.ofNullable(author);
     }
 
-    public String getName() {
-        return this.name;
+    @NotNull
+    public Optional<String> getName() {
+        return Optional.ofNullable(name);
     }
 
-    public void setAuthor(Author author) {
+    public void setAuthor(@NotNull Author author) {
         this.author = author;
     }
 
-    public void setName(String name) {
+    public void setName(@NotNull String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "author=" + author +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

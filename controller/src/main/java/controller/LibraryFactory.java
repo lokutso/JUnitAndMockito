@@ -6,18 +6,11 @@ import org.jetbrains.annotations.Nullable;
 import javax.inject.Inject;
 
 public class LibraryFactory {
-    @NotNull
-    private final BooksFactory fileBookFactory;
     @Nullable
     private LibraryController libraryController;
 
-    @Inject
-    public LibraryFactory(@NotNull FileBookFactory fileBookFactory) {
-        this.fileBookFactory = fileBookFactory;
-    }
-
-    public void loadLibrary(int libraryCapacity) {
-        libraryController = new LibraryController(new Library(fileBookFactory.books()), libraryCapacity);
+    public void loadLibrary(@NotNull BooksFactory booksFactory, int libraryCapacity) {
+        libraryController = new LibraryController(new Library(booksFactory.books()), libraryCapacity);
     }
 
     @NotNull

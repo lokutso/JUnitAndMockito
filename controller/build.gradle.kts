@@ -1,5 +1,9 @@
 plugins {
-    java
+    application
+}
+
+application {
+    mainClass.set("controller.Application")
 }
 
 group = "org.mail"
@@ -15,6 +19,8 @@ dependencies {
     implementation("com.google.inject:guice:5.0.1")
     implementation("com.google.code.gson:gson:2.8.8")
     implementation("org.projectlombok:lombok:1.18.22")
+    implementation("junit:junit:4.13.1")
+    implementation("org.mockito:mockito-core:2.24.0")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
