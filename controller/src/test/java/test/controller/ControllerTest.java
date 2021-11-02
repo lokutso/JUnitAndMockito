@@ -4,7 +4,6 @@ import com.google.inject.*;
 import controller.BooksFactory;
 import controller.FileBookFactory;
 import controller.LibraryFactory;
-import controller.LibraryModule;
 import models.Author;
 import models.Book;
 import net.lamberto.junit.GuiceJUnitRunner;
@@ -16,12 +15,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Supplier;
 
 @RunWith(GuiceJUnitRunner.class)
 @GuiceJUnitRunner.GuiceModules(ControllerTest.TestModule.class)
@@ -29,7 +26,7 @@ public class ControllerTest {
 
     public static class TestModule extends AbstractModule {
         @NotNull
-        private static String fileName = "src/main/resources/books.txt";
+        private static final String fileName = "src/main/resources/books.txt";
 
         @Override
         protected void configure() {
@@ -92,5 +89,42 @@ public class ControllerTest {
             actual = Arrays.stream(cellsWithBooks.get()).filter(Objects::nonNull).count();
         }
         Assert.assertEquals(numberOfBooksInLibrary, actual);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void checkForTakeBookFromEmptyCell() {
+        libraryFactory.loadLibrary(booksFactory, libraryCapacity);
+        libraryFactory.getLibraryController().takeBook(99);
+        libraryFactory.getLibraryController().takeBook(99);
+    }
+
+    @Test
+    public void checkReturnBooksForCompliance() {
+        libraryFactory.loadLibrary(booksFactory, libraryCapacity);
+        Book book = libraryFactory.getLibraryController().getCellsWithBooks().get()[99];
+        Book actual = libraryFactory.getLibraryController().takeBook(99).get();
+        Assert.assertEquals(book, actual);
+    }
+
+    @Test
+    public void checkAddedBookForCompliance() throws Exception {
+        libraryFactory.loadLibrary(booksFactory, libraryCapacity + 1);
+        Book book = new Book(new Author("Author10"), "Book 10");
+        libraryFactory.getLibraryController().addBook(book);
+        Book actual = libraryFactory.getLibraryController().takeBook(libraryCapacity).get();
+        Assert.assertEquals(book, actual);
+    }
+
+    @Test(expected = Exception.class)
+    public void checkForAddWhenAllCellsAreFull() throws Exception {
+        libraryFactory.loadLibrary(booksFactory, libraryCapacity);
+        Book book = new Book(new Author("Author10"), "Book 10");
+        libraryFactory.getLibraryController().addBook(book);
+    }
+
+    @Test
+    public void checkPrintContentToConsole() {
+        libraryFactory.loadLibrary(booksFactory, libraryCapacity);
+        libraryFactory.getLibraryController().printContentsOfCellsToConsole();
     }
 }

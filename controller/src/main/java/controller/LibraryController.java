@@ -65,8 +65,8 @@ public class LibraryController {
     public void printContentsOfCellsToConsole() {
         int count = Math.toIntExact(Arrays.stream(cellsWithBooks).filter(Objects::nonNull).count());
         System.out.printf("Cells occupied %d of %d.\n", count, cellsWithBooks.length);
-        /*for (int i = 0; i < cellsWithBooks.length; i++) {
+        for (int i = 0; i < cellsWithBooks.length; i++) {
             System.out.println(cellsWithBooks[i]);
-        }*/
+        }
     }
 }

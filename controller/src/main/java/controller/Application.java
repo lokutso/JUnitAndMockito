@@ -22,7 +22,7 @@ public class Application {
     }
 
     public void run(@NotNull String[] args) {
-        int libraryCapacity = 0;
+        int libraryCapacity;
         try {
             libraryCapacity = Integer.parseInt(args[1]);
         } catch (Exception e) {
