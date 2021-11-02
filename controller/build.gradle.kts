@@ -11,10 +11,12 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+    maven { url = uri("https://jitpack.io") }
 }
 
 dependencies {
     implementation(project(":models"))
+    implementation("com.github.marcolamberto:guice-junit-runner:master-SNAPSHOT")
     implementation("org.jetbrains:annotations:20.1.0")
     implementation("com.google.inject:guice:5.0.1")
     implementation("com.google.code.gson:gson:2.8.8")
